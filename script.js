@@ -1,4 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener('DOMContentLoaded', async()=>{
+        await fetch('https://sambanova-ai-fastapi.onrender.com/',{
+            method:'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+    })
+
     const chatBody = document.getElementById("chat-body");
     const messageInput = document.getElementById("message-input");
     const chatForm = document.getElementById("chat-form");
@@ -26,28 +35,22 @@ document.addEventListener("DOMContentLoaded", () => {
             addMessage(userMessage, "user");
             messageInput.value = "";
 
-            try{
-                const res = await fetch('', {
-                    method: 'POST',
-                    body: JSON.stringify({inp: userMessage}),
+           // Send message to the backend
+            fetch('https://sambanova-ai-fastapi.onrender.com/chatbot', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({'userInput':userMessage+''}),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    addMessage(data+'', 'bot');
                 })
-
-                if(res.ok){
-                    addMessage(res, 'bot')
-                }
-            }
-            catch(err){
-                addMessage("Something went Wrong! Sorry for the inconvenience, Please try again!", 'bot')
-                console.log(err)
-            }
-
-
-            
-            // Simulate bot response
-            setTimeout(() => {
-                addMessage("I'm an AI bot. You said: " + userMessage, "bot");
-            }, 500);
+                .catch(error => {
+                    addMessage('Sorry, something went wrong.', 'bot');
+                    console.error('Error:', error);
+                });
         }
     });
 });
-
