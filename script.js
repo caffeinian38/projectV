@@ -11,23 +11,23 @@ fileInput.addEventListener("change", () => {
         formData.append("file", file);
 
         // Send file to backend
-        fetch("https://sambanova-ai-fastapi.onrender.com/upload", {
+        fetch("http://127.0.0.1:8000/upload", {
             method: "POST",
             body: formData,
         })
         .then(response => response.json())
         .then(data => {
-            addMessage(`✅ File received: ${data.message}`, "bot");
+            addMessage(`✅ File received: ${data.extracted_text}`, "bot");
         })
         .catch(error => {
             addMessage("❌ Error uploading file.", "bot");
-            console.error("Upload error:", error);
+            console.log("Upload error:", error);
         });
     }
 });
 
     window.addEventListener('DOMContentLoaded', async()=>{
-        await fetch('https://sambanova-ai-fastapi.onrender.com/',{
+        await fetch('http://127.0.0.1:8000/',{
             method:'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ fileInput.addEventListener("change", () => {
             messageInput.value = "";
 
            // Send message to the backend
-            fetch('https://sambanova-ai-fastapi.onrender.com/chatbot', {
+            fetch('http://127.0.0.1:8000/chatbot', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -81,3 +81,4 @@ fileInput.addEventListener("change", () => {
         }
     });
 });
+
