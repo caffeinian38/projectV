@@ -89,3 +89,26 @@ body {
 #send-message:hover {
     background-color: #4240a4;
 }
+.file-upload-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+#file-input {
+    display: none; /* Hide default file input */
+}
+
+.upload-label {
+    background-color: #5350c4;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.upload-label:hover {
+    background-color: #4240a4;
+}
