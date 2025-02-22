@@ -1,4 +1,31 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const fileInput = document.getElementById("file-input");
+
+fileInput.addEventListener("change", () => {
+    const file = fileInput.files[0];
+    if (file) {
+        addMessage(`📁 Uploaded: ${file.name}`, "user");
+
+        // Create FormData to send file
+        const formData = new FormData();
+        formData.append("file", file);
+
+        // Send file to backend
+        fetch("https://sambanova-ai-fastapi.onrender.com/upload", {
+            method: "POST",
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            addMessage(`✅ File received: ${data.message}`, "bot");
+        })
+        .catch(error => {
+            addMessage("❌ Error uploading file.", "bot");
+            console.error("Upload error:", error);
+        });
+    }
+});
+
     window.addEventListener('DOMContentLoaded', async()=>{
         await fetch('https://sambanova-ai-fastapi.onrender.com/',{
             method:'GET',
